@@ -52,7 +52,12 @@
     "featured": false,
     "readingTime": "4 min read",
     "publishedAt": "2026-09-22T14:15:00.000Z",
-    "updatedAt": "2026-09-22T14:15:00.000Z"
+    "updatedAt": "2026-09-22T14:15:00.000Z",
+    "viewTimestamps": [
+      1790511542672,
+      1790511543252
+    ],
+    "totalViews": 2
   },
   {
     "id": "post_1743120100003",

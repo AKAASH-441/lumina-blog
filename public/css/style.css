@@ -1118,6 +1118,7 @@ button, input, textarea, select {
 
 /* Article Hero Cover */
 .article-cover-wrap {
+  aspect-ratio: 16 / 9;
   margin: 2rem 0 3.25rem;
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -1127,8 +1128,9 @@ button, input, textarea, select {
 
 .article-cover-img {
   width: 100%;
-  max-height: 520px;
+  height: 100%;
   object-fit: cover;
+  display: block;
 }
 
 /* Article Typography (Prose - 60 to 75 characters per line) */
