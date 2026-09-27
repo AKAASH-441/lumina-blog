@@ -657,8 +657,8 @@ button, input, textarea, select {
 /* Post Grid */
 .posts-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
 }
 
 .post-card {
@@ -1717,6 +1717,9 @@ textarea.form-control {
 @media (max-width: 1024px) {
   .content-layout {
     grid-template-columns: 1fr;
+  }
+  .posts-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .sidebar {
