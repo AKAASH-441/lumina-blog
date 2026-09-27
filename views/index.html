@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-
+  <a href="#main-content" class="skip-link">Skip to main content</a>
   <!-- Site Navigation Header -->
   <header class="site-header">
     <div class="container header-inner">
@@ -75,7 +75,7 @@
     </div>
   </div>
 
-  <main class="container">
+  <main class="container" id="main-content">
     <!-- Featured Hero Spotlight Story -->
     <section class="hero-featured" id="hero-featured-section">
       <article class="featured-card">
@@ -121,7 +121,7 @@
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
           <input type="text" id="search-input" class="search-input" placeholder="Search essays or keywords..." autocomplete="off">
-          <button class="search-clear" id="search-clear" title="Clear Search">✕</button>
+          <button class="search-clear" id="search-clear" title="Clear Search" aria-label="Clear search">✕</button>
         </div>
       </div>
     </section>

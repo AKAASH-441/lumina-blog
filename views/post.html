@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <!-- Floating Reading Progress Bar -->
   <div id="reading-progress-bar"></div>
@@ -79,7 +80,7 @@
     </div>
   </div>
 
-  <main class="container-narrow">
+  <main class="container-narrow" id="main-content">
     <!-- Article Header -->
     <header class="article-header">
       <a href="/category/{{POST_CATEGORY}}" class="article-category-badge">{{POST_CATEGORY}}</a>
@@ -178,7 +179,7 @@
 
     <!-- Related Posts Grid -->
     <section class="related-posts-section">
-      <h3 class="related-section-title">More From Lumina</h3>
+      <h2 class="related-section-title">More From Lumina</h2>
       <div class="posts-grid" id="related-posts-grid">
         <!-- Rendered via post.js -->
       </div>
