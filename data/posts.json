@@ -21,7 +21,14 @@
     "featured": true,
     "readingTime": "5 min read",
     "publishedAt": "2026-09-25T08:30:00.000Z",
-    "updatedAt": "2026-09-25T08:30:00.000Z"
+    "updatedAt": "2026-09-25T08:30:00.000Z",
+    "viewTimestamps": [
+      1790510179440,
+      1790510180019,
+      1790510263700,
+      1790510264266
+    ],
+    "totalViews": 4
   },
   {
     "id": "post_1743120100002",

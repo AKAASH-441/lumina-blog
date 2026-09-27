@@ -172,6 +172,9 @@ app.get('/post/:slug', async (req, res) => {
       `);
     }
 
+
+    db.incrementView(post.slug).catch(err => console.error('Failed to record view:', err));
+
     // Render markdown to HTML with figures, pull quotes, and callouts
     const contentHtml = renderArticleMarkdown(post.content || '');
 
@@ -254,6 +257,32 @@ app.get('/api/posts/:slug', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch post' });
   }
 });
+
+// Get related posts for a given post slug
+app.get('/api/posts/:slug/related', async (req, res) => {
+  try {
+    const post = await db.getPostBySlug(req.params.slug);
+    if (!post) return res.status(404).json({ error: 'Post not found' });
+    const limit = req.query.limit ? parseInt(req.query.limit, 10) : 3;
+    const related = await db.getRelatedPosts(post, limit);
+    res.json({ posts: related });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch related posts' });
+  }
+});
+
+// Get popular posts (this week)
+app.get('/api/popular', async (req, res) => {
+  try {
+    const limit = req.query.limit ? parseInt(req.query.limit, 10) : 5;
+    const popular = await db.getPopularPosts(limit);
+    res.json({ posts: popular });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch popular posts' });
+  }
+});
+
+// Get categories with count
 
 // Get categories with count
 app.get('/api/categories', async (req, res) => {

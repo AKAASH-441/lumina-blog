@@ -107,9 +107,9 @@ async function initRelatedPosts() {
   const currentSlug = window.location.pathname.replace('/post/', '').replace(/\/$/, '');
 
   try {
-    const res = await fetch('/api/posts?limit=3');
+    const res = await fetch(`/api/posts/${currentSlug}/related?limit=3`);
     const data = await res.json();
-    const posts = (data.posts || []).filter(p => p.slug !== currentSlug).slice(0, 2);
+    const posts = data.posts || [];
 
     if (posts.length === 0) {
       container.parentElement.style.display = 'none';

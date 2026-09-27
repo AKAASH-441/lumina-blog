@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
   initNewsletter();
   initFilterAndSearch();
+  initPopularPosts();
 });
-
 // Toast Notification System
 export function showToast(message, type = 'info') {
   let container = document.querySelector('.toast-container');
@@ -298,6 +298,34 @@ function initFilterAndSearch() {
   loadCategories();
   fetchAndRenderPosts();
 }
+// Popular This Week Sidebar Widget
+async function initPopularPosts() {
+  const container = document.getElementById('popular-posts-list');
+  if (!container) return;
 
+  try {
+    const res = await fetch('/api/popular?limit=5');
+    const data = await res.json();
+    const posts = data.posts || [];
+
+    if (posts.length === 0) {
+      container.innerHTML = `<p style="font-size: 0.85rem; color: var(--text-muted);">No popular posts yet.</p>`;
+      return;
+    }
+
+    container.innerHTML = posts.map((post, index) => `
+      <a href="/post/${post.slug}" class="popular-post-item">
+        <span class="popular-post-rank">${index + 1}</span>
+        <div class="popular-post-info">
+          <span class="popular-post-title">${post.title}</span>
+          <span class="popular-post-meta">${post.category} · ${post.readingTime || '4 min read'}</span>
+        </div>
+      </a>
+    `).join('');
+  } catch (err) {
+    console.error('Error loading popular posts:', err);
+    container.innerHTML = '';
+  }
+}
 // Make showToast available globally
 window.showToast = showToast;
