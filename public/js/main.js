@@ -143,6 +143,12 @@ function initFilterAndSearch() {
   if (urlParams.has('category')) {
     currentCategory = urlParams.get('category');
   }
+
+  // Check URL path for /category/:name routes
+  const pathMatch = window.location.pathname.match(/^\/category\/([^/]+)/);
+  if (pathMatch) {
+    currentCategory = decodeURIComponent(pathMatch[1]);
+  }
   if (urlParams.has('q')) {
     searchQuery = urlParams.get('q');
     if (searchInput) searchInput.value = searchQuery;
