@@ -151,27 +151,67 @@ app.get('/post/:slug', async (req, res) => {
   try {
     const post = await db.getPostBySlug(req.params.slug);
     if (!post) {
-      return res.status(404).send(`
+            return res.status(404).send(`
         <!DOCTYPE html>
         <html lang="en">
         <head>
           <meta charset="UTF-8">
-          <title>Post Not Found - ${BLOG_TITLE}</title>
-          <link rel="stylesheet" href="/css/style.css">
+          <title>Page Not Found - ${BLOG_TITLE}</title>
+          <meta name="description" content="The page you're looking for could not be found.">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+          <link rel="stylesheet" href="/css/style.css">
         </head>
-        <body class="editorial-theme">
-          <div class="container not-found-wrapper">
-            <h1>404</h1>
-            <h2>Post Not Found</h2>
-            <p>The essay you are looking for may have been moved or archived.</p>
-            <a href="/" class="btn btn-primary">Return to Homepage</a>
-          </div>
+        <body>
+          <a href="#main-content" class="skip-link">Skip to main content</a>
+          <header class="site-header">
+            <div class="container header-inner">
+              <a href="/" class="brand-logo" id="site-logo">
+                <div class="brand-icon">L</div>
+                <span>${BLOG_TITLE}</span>
+                <span class="brand-tagline-badge">Editorial</span>
+              </a>
+              <nav class="main-nav" id="main-nav">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/category/technology" class="nav-link">Technology</a>
+                <a href="/category/design" class="nav-link">Design</a>
+                <a href="/category/productivity" class="nav-link">Productivity</a>
+                <a href="/about" class="nav-link">About</a>
+                <a href="/contact" class="nav-link">Contact</a>
+              </nav>
+              <div class="header-actions">
+                <button class="icon-btn" id="theme-toggle-btn" title="Toggle Dark/Light Mode" aria-label="Toggle theme">
+                  <span id="theme-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                  </span>
+                </button>
+                <button class="mobile-toggle" id="mobile-menu-toggle" aria-label="Open navigation menu">☰</button>
+              </div>
+            </div>
+          </header>
+
+          <main class="container" id="main-content">
+            <div class="not-found-wrapper">
+              <div class="not-found-code">404</div>
+              <h1 class="not-found-title">This essay has wandered off</h1>
+              <p class="not-found-text">The page you're looking for may have been moved, archived, or never existed. Let's get you back to something worth reading.</p>
+              <a href="/" class="btn-primary" style="display: inline-flex; padding: 0.75rem 1.5rem;">Return to Homepage</a>
+            </div>
+          </main>
+
+          <footer class="site-footer">
+            <div class="container">
+              <div class="footer-bottom">
+                <div>© 2026 ${BLOG_TITLE} Editorial. All rights reserved.</div>
+              </div>
+            </div>
+          </footer>
+
+          <script type="module" src="/js/main.js"></script>
         </body>
-        </html>
+                </html>
       `);
     }
-
 
     db.incrementView(post.slug).catch(err => console.error('Failed to record view:', err));
 
