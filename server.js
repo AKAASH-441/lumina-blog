@@ -415,9 +415,43 @@ app.delete('/api/admin/posts/:id', authenticateAdmin, async (req, res) => {
     res.status(500).json({ error: 'Failed to delete post' });
   }
 });
+// SEO Sitemap
+app.get('/sitemap.xml', async (req, res) => {
+  try {
+    const baseUrl = 'https://lumina-blog-k010.onrender.com';
+    const posts = await db.getAllPosts();
+
+    const staticPages = ['', '/about', '/contact', '/category/technology', '/category/design', '/category/productivity'];
+
+    const staticUrls = staticPages.map(path => `
+  <url>
+    <loc>${baseUrl}${path}</loc>
+    <changefreq>weekly</changefreq>
+  </url>`).join('');
+
+    const postUrls = posts.map(post => `
+  <url>
+    <loc>${baseUrl}/post/${post.slug}</loc>
+    <lastmod>${new Date(post.publishedAt).toISOString().split('T')[0]}</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>`).join('');
+
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${staticUrls}${postUrls}
+</urlset>`;
+
+    res.header('Content-Type', 'application/xml');
+    res.send(xml);
+  } catch (err) {
+    console.error('Sitemap generation failed:', err);
+    res.status(500).send('Failed to generate sitemap');
+  }
+});
 
 // Start Server
 app.listen(PORT, () => {
+
+
   console.log(`\n======================================================`);
   console.log(`🌟 Lumina Editorial Blog is running!`);
   console.log(`🌐 Public Website:     http://localhost:${PORT}`);
