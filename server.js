@@ -415,9 +415,45 @@ app.delete('/api/admin/posts/:id', authenticateAdmin, async (req, res) => {
     res.status(500).json({ error: 'Failed to delete post' });
   }
 });
-// SEO Sitemap
-app.get('/sitemap.xml', async (req, res) => {
+// RSS Feed
+app.get('/feed.xml', async (req, res) => {
   try {
+    const baseUrl = 'https://lumina-blog-k010.onrender.com';
+    const posts = await db.getAllPosts();
+    const sortedPosts = posts
+      .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
+      .slice(0, 20);
+
+    const escapeXml = (str) => (str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+    const items = sortedPosts.map(post => `
+    <item>
+      <title>${escapeXml(post.title)}</title>
+      <link>${baseUrl}/post/${post.slug}</link>
+      <guid>${baseUrl}/post/${post.slug}</guid>
+      <pubDate>${new Date(post.publishedAt).toUTCString()}</pubDate>
+      <description>${escapeXml(post.excerpt)}</description>
+    </item>`).join('');
+
+    const rss = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+  <title>${BLOG_TITLE}</title>
+  <link>${baseUrl}</link>
+  <description>${escapeXml(BLOG_TAGLINE)}</description>${items}
+</channel>
+</rss>`;
+
+    res.header('Content-Type', 'application/rss+xml');
+    res.send(rss);
+  } catch (err) {
+    console.error('RSS feed generation failed:', err);
+    res.status(500).send('Failed to generate feed');
+  }
+});
+
+// SEO Sitemap
+app.get('/sitemap.xml', async (req, res) => {  try {
     const baseUrl = 'https://lumina-blog-k010.onrender.com';
     const posts = await db.getAllPosts();
 
