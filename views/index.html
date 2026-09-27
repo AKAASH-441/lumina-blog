@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lumina — Essays on Technology, Design & Intentional Living</title>
+  <meta name="description" content="A curated editorial publication focusing on modern technology, deep focus, timeless design, and deliberate living.">
+  <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+  
+  <!-- Open Graph / Social Sharing Meta -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Lumina — Thoughtful Essays & Ideas">
+  <meta property="og:description" content="Explore stories on technology, focus, and deliberate living.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1507842229451-7f01be7fe616?auto=format&fit=crop&w=1200&q=80">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Site Navigation Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand-logo" id="site-logo">
+        <div class="brand-icon">L</div>
+        <span>Lumina</span>
+        <span class="brand-tagline-badge">Editorial</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="main-nav" id="main-nav">
+        <a href="/" class="nav-link active">Home</a>
+        <a href="/category/technology" class="nav-link">Technology</a>
+        <a href="/category/design" class="nav-link">Design</a>
+        <a href="/category/productivity" class="nav-link">Productivity</a>
+        <a href="/about" class="nav-link">About</a>
+        <a href="/contact" class="nav-link">Contact</a>
+      </nav>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <!-- Theme Toggle -->
+        <button class="icon-btn" id="theme-toggle-btn" title="Toggle Dark/Light Mode" aria-label="Toggle theme">
+          <span id="theme-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </span>
+        </button>
+
+        <!-- Admin Quick Link -->
+        <a href="/admin" class="btn-admin" title="Admin CMS Portal">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          <span>Write</span>
+        </a>
+
+        <!-- Mobile Hamburger Toggle -->
+        <button class="mobile-toggle" id="mobile-menu-toggle" aria-label="Open mobile navigation menu">
+          ☰
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================
+       MONETIZATION: Header Ad Slot
+       Drop your Google AdSense code below
+       ========================================== -->
+  <div class="container ad-wrapper">
+    <div id="ad-slot-header" class="ad-slot-box">
+      <span class="ad-disclaimer">Advertisement</span>
+      <!-- Google AdSense or Ad Network Script Placeholder -->
+      <div class="ad-placeholder-content">
+        <span class="ad-placeholder-code">&lt;!-- ad-slot-header --&gt;</span>
+        <span>Ad Placement Zone (728x90 Banner / Fluid Mobile)</span>
+      </div>
+    </div>
+  </div>
+
+  <main class="container">
+    <!-- Featured Hero Spotlight Story -->
+    <section class="hero-featured" id="hero-featured-section">
+      <article class="featured-card">
+        <a href="/post/the-art-of-digital-minimalism" class="featured-img-wrap">
+          <img src="https://images.unsplash.com/photo-1507842229451-7f01be7fe616?auto=format&fit=crop&w=1400&q=80" alt="Featured Story" class="featured-img">
+          <span class="featured-badge">Featured Story</span>
+        </a>
+        <div class="featured-content">
+          <div class="post-meta-top">
+            <span class="category-tag">Productivity</span>
+            <span class="meta-divider">•</span>
+            <span class="meta-text">5 min read</span>
+          </div>
+          <h1 class="featured-title">
+            <a href="/post/the-art-of-digital-minimalism">The Art of Digital Minimalism: Reclaiming Focus in an Overconnected World</a>
+          </h1>
+          <p class="featured-excerpt">
+            In an era of relentless notifications and algorithmically generated outrage, intentional friction isn't just a productivity technique—it is an act of cognitive preservation.
+          </p>
+          <div class="author-block">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=240&h=240&q=80" alt="Aria Thorne" class="author-avatar">
+            <div>
+              <div class="author-info-name">Aria Thorne</div>
+              <div class="author-info-role">Founding Editor & Essayist</div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- Category Filter Pills & Live Search Bar -->
+    <section class="filter-bar-section">
+      <div class="filter-bar">
+        <!-- Category Filter Pills -->
+        <div class="category-pills" id="category-pills">
+          <!-- Dynamically populated by main.js -->
+        </div>
+
+        <!-- Search Bar with Instant Debounce -->
+        <div class="search-wrapper">
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="search-input" class="search-input" placeholder="Search essays or keywords..." autocomplete="off">
+          <button class="search-clear" id="search-clear" title="Clear Search">✕</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content Layout (Grid + Sidebar) -->
+    <div class="content-layout">
+      <!-- Left Column: Posts Grid -->
+      <section>
+        <div class="posts-grid" id="posts-grid">
+          <!-- Dynamically rendered via main.js from /api/posts -->
+        </div>
+      </section>
+
+      <!-- Right Column: Sidebar -->
+      <aside class="sidebar">
+        <!-- Author Profile Widget -->
+        <div class="widget author-widget">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=240&h=240&q=80" alt="Aria Thorne" class="author-widget-avatar">
+          <h3 class="author-widget-name">Aria Thorne</h3>
+          <div class="author-widget-role">Founding Editor</div>
+          <p class="author-widget-bio">
+            Writing weekly dispatches exploring deep work, mindful technology use, and timeless digital craftsmanship.
+          </p>
+          <div class="social-links">
+            <a href="https://twitter.com" target="_blank" rel="noopener" class="social-link" title="Twitter/X">𝕏</a>
+            <a href="https://github.com" target="_blank" rel="noopener" class="social-link" title="GitHub">GH</a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="social-link" title="LinkedIn">in</a>
+          </div>
+        </div>
+
+        <!-- Newsletter Subscription Widget -->
+        <div class="widget newsletter-widget">
+          <h3 class="widget-title">The Sunday Dispatch</h3>
+          <p class="newsletter-desc">
+            A weekly briefing of original essays, curated reading lists, and thought-provoking ideas delivered directly to your inbox.
+          </p>
+          <form id="newsletter-form" class="newsletter-form">
+            <input type="email" class="newsletter-input" placeholder="Your best email address..." required>
+            <button type="submit" class="btn-primary">Join 14,000+ Readers</button>
+            <div class="newsletter-disclaimer">Zero spam. Unsubscribe in one click anytime.</div>
+          </form>
+        </div>
+
+        <!-- ==========================================
+             MONETIZATION: Sidebar Ad Slot
+             Drop your Google AdSense code below
+             ========================================== -->
+        <div class="widget" style="padding: 0.75rem;">
+          <div id="ad-slot-sidebar" class="ad-slot-box">
+            <span class="ad-disclaimer">Sponsor</span>
+            <!-- Google AdSense or Ad Network Script Placeholder -->
+            <div class="ad-placeholder-content">
+              <span class="ad-placeholder-code">&lt;!-- ad-slot-sidebar --&gt;</span>
+              <span>Sidebar Ad Slot (300x250 Medium Rectangle)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tags Cloud Widget -->
+        <div class="widget">
+          <h3 class="widget-title">Browse Topics</h3>
+          <div class="tags-cloud">
+            <a href="/search?q=Focus" class="tag-badge">#Focus</a>
+            <a href="/search?q=WebDev" class="tag-badge">#WebDev</a>
+            <a href="/search?q=Design" class="tag-badge">#Design</a>
+            <a href="/search?q=Mindfulness" class="tag-badge">#Mindfulness</a>
+            <a href="/search?q=RemoteWork" class="tag-badge">#RemoteWork</a>
+            <a href="/search?q=Habits" class="tag-badge">#Habits</a>
+            <a href="/search?q=Typography" class="tag-badge">#Typography</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="brand-logo">
+            <div class="brand-icon">L</div>
+            <span>Lumina</span>
+          </div>
+          <p>
+            An independent digital publication dedicated to thoughtful essays on software craftsmanship, intentional technology, and modern living.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul class="footer-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/category/technology">Technology</a></li>
+            <li><a href="/category/design">Design & Typography</a></li>
+            <li><a href="/category/productivity">Productivity & Habits</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Publication</h4>
+          <ul class="footer-links">
+            <li><a href="/about">About Lumina</a></li>
+            <li><a href="/contact">Editorial Inquiries</a></li>
+            <li><a href="/admin">Writer Portal</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Editorial Note</h4>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">
+            Published with meticulous care. Designed to provide a serene, distraction-free reading experience.
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>© 2026 Lumina Editorial. All rights reserved.</div>
+        <div style="display: flex; gap: 1.25rem;">
+          <a href="/about">Privacy</a>
+          <a href="/about">Terms</a>
+          <a href="/contact">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>

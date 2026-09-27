@@ -1,0 +1,28 @@
+{
+  "name": "lumina-blog",
+  "version": "1.0.0",
+  "description": "A modern, professional editorial blogging platform with full monetization slots, responsive design, and markdown admin CMS.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "blog",
+    "express",
+    "markdown",
+    "editorial",
+    "adsense-ready"
+  ],
+  "author": "Lumina Editorial",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.3",
+    "marked": "^15.0.7"
+  }
+}

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Studio & Editor — Lumina Editorial</title>
+  <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/editor.css">
+
+  <!-- Marked library for instant client-side markdown preview -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body class="admin-body">
+
+  <!-- ==========================================
+       PASSWORD AUTHENTICATION OVERLAY
+       ========================================== -->
+  <div id="auth-overlay" class="auth-overlay">
+    <div class="auth-modal">
+      <div class="auth-icon">✦</div>
+      <h2 class="auth-title">Lumina Writer's Studio</h2>
+      <p class="auth-desc">Enter your administrative passphrase to write, edit, and publish stories.</p>
+      
+      <form id="admin-login-form" class="auth-form">
+        <div class="form-group" style="margin-bottom: 0;">
+          <input type="password" id="admin-password-input" class="form-control" placeholder="Enter admin password..." required autofocus>
+        </div>
+        <button type="submit" class="btn-primary" style="padding: 0.75rem;">Unlock Studio</button>
+        <div class="auth-hint">Default password is <strong>admin123</strong> (configurable in .env)</div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin Navigation Top Bar -->
+  <header class="admin-navbar">
+    <div class="admin-nav-left">
+      <a href="/" class="brand-logo" style="font-size: 1.15rem;" title="View Live Blog">
+        <div class="brand-icon" style="width: 28px; height: 28px; font-size: 0.9rem;">L</div>
+        <span>Lumina</span>
+        <span class="brand-tagline-badge" style="background: var(--accent-light); color: var(--accent-primary);">Studio</span>
+      </a>
+
+      <!-- Workspace Tabs -->
+      <div class="admin-tabs">
+        <button id="tab-btn-editor" class="admin-tab-btn active">Write & Edit</button>
+        <button id="tab-btn-manage" class="admin-tab-btn">All Stories</button>
+      </div>
+
+      <span id="editor-header-title" style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">
+        Drafting New Story
+      </span>
+    </div>
+
+    <div class="admin-nav-right">
+      <!-- View Modes -->
+      <div class="admin-tabs" style="display: flex;">
+        <button class="admin-tab-btn view-mode-btn active" data-mode="split">Split</button>
+        <button class="admin-tab-btn view-mode-btn" data-mode="edit">Edit Only</button>
+        <button class="admin-tab-btn view-mode-btn" data-mode="preview">Preview</button>
+      </div>
+
+      <button id="btn-new-post" class="btn-sm" title="Draft New Story">+ New</button>
+      <button id="btn-save-post" class="btn-primary" style="padding: 0.45rem 1.1rem; font-size: 0.85rem;">
+        Publish Story
+      </button>
+
+      <button id="btn-admin-logout" class="icon-btn" title="Lock & Logout" aria-label="Logout">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ==========================================
+       TAB 1: WRITER WORKSPACE (EDITOR + PREVIEW)
+       ========================================== -->
+  <section id="editor-workspace" class="editor-workspace">
+    <!-- Main Writing Column -->
+    <div class="editor-main">
+      <div class="title-input-wrap">
+        <input type="text" id="post-title" class="editor-title-input" placeholder="Title of your essay or article..." autocomplete="off">
+      </div>
+
+      <!-- Formatting Toolbar -->
+      <div class="editor-toolbar">
+        <button class="tb-btn" id="tb-bold" title="Bold (**text**)"><strong>B</strong></button>
+        <button class="tb-btn" id="tb-italic" title="Italic (*text*)"><em>I</em></button>
+        <span class="tb-separator"></span>
+        <button class="tb-btn" id="tb-h2" title="Section Heading (##)">H2</button>
+        <button class="tb-btn" id="tb-h3" title="Subheading (###)">H3</button>
+        <span class="tb-separator"></span>
+        <button class="tb-btn" id="tb-quote" title="Blockquote (&gt;)">❝ Quote</button>
+        <button class="tb-btn" id="tb-pullquote" title="Pull Quote ([!PULLQUOTE])">“ Pull Quote</button>
+        <button class="tb-btn" id="tb-callout" title="Editorial Callout ([!NOTE])">💡 Callout</button>
+        <button class="tb-btn" id="tb-code" title="Code Block (```)">&lt;/&gt;</button>
+        <button class="tb-btn" id="tb-list" title="Bullet List (-)">• List</button>
+        <span class="tb-separator"></span>
+        <button class="tb-btn" id="tb-link" title="Insert Link">🔗 Link</button>
+        <button class="tb-btn" id="tb-image" title="Insert Image with Caption">🖼 Image</button>
+        <span class="tb-separator"></span>
+        <!-- Special Helper to insert in-article monetization slot -->
+        <button class="tb-btn" id="tb-ad" title="Insert In-Article Ad Slot Marker" style="color: var(--accent-primary); font-weight:700;">
+          + In-Article Ad Slot
+        </button>
+      </div>
+
+      <!-- Split Screen Panes -->
+      <div class="editor-pane-container">
+        <!-- Markdown Raw Code Pane -->
+        <div class="code-pane">
+          <textarea id="post-content" class="editor-textarea" placeholder="Write your story in Markdown here...
+
+Use ## for headings, > for quotes, and standard markdown syntax. The live preview on the right shows exactly how it will look to readers!"></textarea>
+        </div>
+
+        <!-- Live Medium-Style Typography Preview Pane -->
+        <div class="preview-pane" id="preview-content">
+          <h1 class="article-title" style="font-size: 2.2rem; margin-bottom: 1.5rem;">Untitled Story</h1>
+          <div class="article-prose">
+            <p style="color: var(--text-muted); font-style: italic;">
+              Your story's typography preview will render here in real-time as you write...
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Metadata Sidebar Settings -->
+    <aside class="editor-sidebar">
+      <!-- Publishing Metadata Card -->
+      <div class="sidebar-card">
+        <h3 class="sidebar-card-title">Story Details</h3>
+
+        <!-- Category -->
+        <div class="meta-group">
+          <label class="meta-label" for="post-category">Category</label>
+          <select id="post-category" class="meta-input">
+            <option value="Technology">Technology</option>
+            <option value="Design">Design</option>
+            <option value="Productivity">Productivity</option>
+            <option value="Culture">Culture</option>
+            <option value="Creativity">Creativity</option>
+            <option value="General">General</option>
+          </select>
+        </div>
+
+        <!-- Tags -->
+        <div class="meta-group">
+          <label class="meta-label" for="post-tags">Tags (comma separated)</label>
+          <input type="text" id="post-tags" class="meta-input" placeholder="WebDev, Architecture, UX">
+        </div>
+
+        <!-- Excerpt -->
+        <div class="meta-group">
+          <label class="meta-label" for="post-excerpt">Short Excerpt / Lead</label>
+          <textarea id="post-excerpt" class="meta-input" style="height: 75px; resize: vertical;" placeholder="1-2 sentences summarizing the essay for cards and social sharing previews..."></textarea>
+        </div>
+
+        <!-- URL Slug -->
+        <div class="meta-group">
+          <label class="meta-label" for="post-slug">URL Slug</label>
+          <input type="text" id="post-slug" class="meta-input" placeholder="my-story-title">
+        </div>
+
+        <!-- Featured Story Toggle -->
+        <div class="meta-group" style="display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem;">
+          <input type="checkbox" id="post-featured">
+          <label for="post-featured" style="font-size: 0.85rem; font-weight: 600; cursor: pointer;">
+            Feature as Hero Story on Homepage
+          </label>
+        </div>
+      </div>
+
+      <!-- Cover Image Card -->
+      <div class="sidebar-card">
+        <h3 class="sidebar-card-title">Cover Image</h3>
+        <div class="meta-group">
+          <label class="meta-label" for="post-cover">Image URL</label>
+          <input type="url" id="post-cover" class="meta-input" value="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80">
+        </div>
+
+        <label class="meta-label">Quick Preset Covers</label>
+        <div class="preset-covers" id="preset-covers-wrap">
+          <!-- Populated by admin.js -->
+        </div>
+
+        <div class="cover-preview">
+          <img id="cover-preview-img" src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80" alt="Cover preview">
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- ==========================================
+       TAB 2: POSTS MANAGEMENT SECTION
+       ========================================== -->
+  <section id="posts-management-section" class="posts-management-section" style="display: none;">
+    <div class="posts-table-card">
+      <div class="table-header-bar">
+        <div>
+          <h2 style="font-size: 1.25rem; font-weight: 800;">All Published Stories</h2>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Manage, edit, or remove your daily blog posts.</p>
+        </div>
+        <button id="btn-manage-new-post" class="btn-primary" style="font-size: 0.85rem; padding: 0.45rem 1rem;" onclick="document.getElementById('btn-new-post').click();">
+          + Draft New Story
+        </button>
+      </div>
+
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Story Title & URL</th>
+            <th>Category</th>
+            <th>Published Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="admin-posts-tbody">
+          <!-- Populated via admin.js -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script type="module" src="/js/main.js"></script>
+  <script type="module" src="/js/admin.js"></script>
+</body>
+</html>
