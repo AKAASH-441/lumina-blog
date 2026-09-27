@@ -406,8 +406,9 @@ button, input, textarea, select {
 
 /* Specific Slot Geometries */
 #ad-slot-header {
-  max-width: 728px;
-  min-height: 90px;
+  width: 100%;
+  max-width: 100%;
+  min-height: 140px;
 }
 
 #ad-slot-sidebar {
@@ -1942,3 +1943,4 @@ textarea.form-control {
     min-height: 50px;
   }
 }
+
